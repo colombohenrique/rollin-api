@@ -42,6 +42,11 @@ func AddNewEvent(c *gin.Context) {
 	c.JSON(http.StatusOK, &event)
 }
 
+//func AddEventParticipant(event models.Event){
+//	id := event.ID
+//	database.DB.
+//}
+
 func DeleteEvent(c *gin.Context) {
 	var event models.Event
 	id := c.Params.ByName("id")

@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/colombohenrique/rollin-api/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -48,7 +49,15 @@ func ConnectDatabase() {
 	if err != nil {
 		log.Panic("Error connecting to database")
 	}
-	DB.AutoMigrate()
+	MigrateAllSchemas()
+}
+
+func MigrateAllSchemas() {
+	DB.AutoMigrate(&models.Event{})
+	DB.AutoMigrate(&models.Item{})
+	DB.AutoMigrate(&models.Person{})
+	DB.AutoMigrate(&models.User{})
+	DB.AutoMigrate(&models.EventParticipant{})
 }
 
 type ConnectionConfig struct {

@@ -1,11 +1,13 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type Event struct {
 	gorm.Model
-	Name         string `json:"name"`
-	Creator      User   `json:"creator"`
-	Participants []User `json:"participants"`
-	Items        []Item
+	Name         string             `json:"name"`
+	Creator      User               `json:"creator" gorm:"embedded;embeddedPrefix:creator_"`
+	Participants []EventParticipant `json:"participants" gorm:"-:all"`
+	Items        []Item             `json:"items" gorm:"-:all"`
 }

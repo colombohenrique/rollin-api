@@ -39,6 +39,16 @@ func AddNewUser(c *gin.Context) {
 		})
 		return
 	}
+
+	//Data validator
+	if err := models.DataValidate(&user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"return": "Problems creating new user",
+			"error":  err.Error(),
+		})
+		return
+	}
+
 	database.DB.Create(&user)
 	c.JSON(http.StatusOK, &user)
 }
@@ -52,6 +62,15 @@ func EditUser(c *gin.Context) {
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"return": "Problems editing user",
+			"error":  err.Error(),
+		})
+		return
+	}
+
+	//Data validator
+	if err := models.DataValidate(&user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"return": "Problems creating new user",
 			"error":  err.Error(),
 		})
 		return
